@@ -1,9 +1,17 @@
+import ArgumentParser
 import CJuceTracktion
+import Foundation
+import JuceTracktionKit
 
-
-struct TracktionKitRunner {
+@main
+struct TracktionKitRunner: AsyncParsableCommand {
     static func main() {
-        print("Running TracktionKit!")
-        // Example usage of TracktionKit
+        print("Running TracktionKitRunner!")
+        juce.initialiseJuce_GUI()
+        let engine = TracktionEngine.getInstance()
+        engine.initialize()
+        engine.shutdown()
+        juce.shutdownJuce_GUI()
+        print("Shutdown!")
     }
 }

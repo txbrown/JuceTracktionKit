@@ -1,0 +1,6 @@
+module CJuceTracktion { 
+    header "CJuceTracktion.h"
+    header "../../../tracktion_engine/modules/tracktion_engine/tracktion_engine.h"
+        header "../../../tracktion_engine/modules/tracktion_engine/utilities/tracktion_engine.h"
+    export *
+}

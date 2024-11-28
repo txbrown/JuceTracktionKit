@@ -166,7 +166,6 @@
 #endif
 
 #ifndef    JUCE_CHECK_MEMORY_LEAKS
- //#define JUCE_CHECK_MEMORY_LEAKS 1
 #endif
 
 #ifndef    JUCE_DONT_AUTOLINK_TO_WIN32_LIBRARIES
@@ -296,7 +295,7 @@
 // tracktion_engine flags:
 
 #ifndef    TRACKTION_ENABLE_SINGLETONS
- //#define TRACKTION_ENABLE_SINGLETONS 0
+ #define   TRACKTION_ENABLE_SINGLETONS 0
 #endif
 
 #ifndef    TRACKTION_ENABLE_ARA

@@ -1,10 +1,11 @@
+#pragma once
 
-
-
-
-#ifndef C_JUCE_TRACKTION_H
-#define C_JUCE_TRACKTION_H
-
-#include "TracktionBridge.h"
-
-#endif
+#include "TracktionEngine.h"
+#include "EditTimeRange.h"
+#include "TempoSequence.h"
+#include "Track.h"
+#include "SamplerPlugin.h"
+#include "Edit.h"
+#include "StepClip.h"
+#include "Transport.h"
+#include "PluginCache.h"
