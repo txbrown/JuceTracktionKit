@@ -1,17 +1,23 @@
-import ArgumentParser
 import CJuceTracktion
-import Foundation
 import JuceTracktionKit
+import SwiftUI
 
 @main
-struct TracktionKitRunner: AsyncParsableCommand {
-    static func main() {
-        print("Running TracktionKitRunner!")
+struct TracktionKitApp: App {
+    @StateObject private var audioEngineManager = AudioEngineManager(name: "JuceTracktionKitRunner")
+
+    init() {
+        // Initialize JUCE
         juce.initialiseJuce_GUI()
-        let engine = TracktionEngine.getInstance()
-        engine.initialize()
-        engine.shutdown()
-        juce.shutdownJuce_GUI()
-        print("Shutdown!")
+    }
+
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+                .environmentObject(audioEngineManager)
+                .onDisappear {
+                    juce.shutdownJuce_GUI()
+                }
+        }
     }
 }

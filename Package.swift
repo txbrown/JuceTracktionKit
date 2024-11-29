@@ -16,7 +16,6 @@ let linkerSettings: [LinkerSetting] = [
     .linkedFramework("QuartzCore"),
     .linkedFramework("Security"),
     .linkedFramework("WebKit"),
-    .linkedLibrary("c++"), // Add explicit C++ standard library linking
 
     .unsafeFlags(
         [
@@ -53,6 +52,8 @@ let commonCxxSettings: [CXXSetting] = [
     .define("OS_SIGNPOST_ID_INVALID", to: "0"),
     .define("OS_SIGNPOST_ID_NULL", to: "0"),
     .define("OS_LOG_CATEGORY_POINTS_OF_INTEREST", to: "0"),
+    .define("JUCE_HEADLESS_PLUGIN_CLIENT", to: "1"),
+
     .unsafeFlags([
         "-x", "objective-c++",
         "-std=c++20",

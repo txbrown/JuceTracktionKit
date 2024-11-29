@@ -20,10 +20,14 @@
     <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_osc" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="tracktion_core" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
-    <MODULE id="tracktion_engine" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="tracktion_engine" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="tracktion_graph" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
   </MODULES>
-  <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" TRACKTION_ENABLE_SINGLETONS="1"/>
+  <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" TRACKTION_ENABLE_SINGLETONS="0"
+               JUCE_WEB_BROWSER="0" JUCE_USE_WIN_WEBVIEW2_WITH_STATIC_LINKING="0"
+               JUCE_USE_WIN_WEBVIEW2="0" JUCE_ENABLE_LIVE_CONSTANT_EDITOR="0"
+               JUCE_USE_XCURSOR="0" JUCE_USE_XINERAMA="0" JUCE_USE_XRANDR="0"
+               JUCE_USE_XSHM="0" JUCE_WIN_PER_MONITOR_DPI_AWARE="0"/>
   <EXPORTFORMATS>
     <XCODE_MAC targetFolder="Builds/MacOSX" keepCustomXcodeSchemes="1">
       <CONFIGURATIONS>
@@ -41,14 +45,14 @@
         <MODULEPATH id="juce_audio_formats" path="../../../../tracktion_engine/modules/juce/modules"/>
         <MODULEPATH id="juce_dsp" path="../../../../tracktion_engine/modules/juce/modules"/>
         <MODULEPATH id="juce_osc" path="../../../../tracktion_engine/modules/juce/modules"/>
-        <MODULEPATH id="tracktion_graph" path="../../../../tracktion_engine/modules"/>
         <MODULEPATH id="tracktion_core" path="../../../../tracktion_engine/modules"/>
         <MODULEPATH id="juce_graphics" path="../../../../tracktion_engine/modules/juce/modules"/>
-        <MODULEPATH id="tracktion_engine" path="../../../../tracktion_engine/modules"/>
         <MODULEPATH id="juce_audio_utils" path="../../../../tracktion_engine/modules/juce/modules"/>
         <MODULEPATH id="juce_audio_processors" path="../../../../tracktion_engine/modules/juce/modules"/>
         <MODULEPATH id="juce_gui_extra" path="../../../../tracktion_engine/modules/juce/modules"/>
         <MODULEPATH id="juce_gui_basics" path="../../../../tracktion_engine/modules/juce/modules"/>
+        <MODULEPATH id="tracktion_engine" path="../../../../tracktion_engine/modules"/>
+        <MODULEPATH id="tracktion_graph" path="../../../../tracktion_engine/modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
     <XCODE_IPHONE targetFolder="Builds/iOS" iosScreenOrientation="UIInterfaceOrientationLandscapeLeft,UIInterfaceOrientationLandscapeRight,UIInterfaceOrientationPortrait,UIInterfaceOrientationPortraitUpsideDown">

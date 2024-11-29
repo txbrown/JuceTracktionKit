@@ -1,0 +1,7 @@
+module CJuceTracktion {
+    header "CJuceTracktion.h"
+    link "../../../tracktion_engine/modules/juce"
+    link "../../../tracktion_engine/modules/tracktion_engine"
+    link "../../../tracktion_engine/modules/tracktion_core"
+    link "../../../tracktion_engine/modules/tracktion_graph"
+}

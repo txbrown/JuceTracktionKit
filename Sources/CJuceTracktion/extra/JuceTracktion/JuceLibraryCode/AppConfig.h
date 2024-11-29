@@ -20,7 +20,7 @@
 
 // [END_USER_CODE_SECTION]
 
-#define JUCE_PROJUCER_VERSION 0x80003
+#define JUCE_PROJUCER_VERSION 0x80001
 
 //==============================================================================
 #define JUCE_MODULE_AVAILABLE_juce_audio_basics          1
@@ -166,6 +166,7 @@
 #endif
 
 #ifndef    JUCE_CHECK_MEMORY_LEAKS
+ //#define JUCE_CHECK_MEMORY_LEAKS 0
 #endif
 
 #ifndef    JUCE_DONT_AUTOLINK_TO_WIN32_LIBRARIES
@@ -249,15 +250,15 @@
 #endif
 
 #ifndef    JUCE_USE_XRANDR
- //#define JUCE_USE_XRANDR 1
+ #define   JUCE_USE_XRANDR 0
 #endif
 
 #ifndef    JUCE_USE_XINERAMA
- //#define JUCE_USE_XINERAMA 1
+ #define   JUCE_USE_XINERAMA 0
 #endif
 
 #ifndef    JUCE_USE_XSHM
- //#define JUCE_USE_XSHM 1
+ #define   JUCE_USE_XSHM 0
 #endif
 
 #ifndef    JUCE_USE_XRENDER
@@ -265,30 +266,30 @@
 #endif
 
 #ifndef    JUCE_USE_XCURSOR
- //#define JUCE_USE_XCURSOR 1
+ #define   JUCE_USE_XCURSOR 0
 #endif
 
 #ifndef    JUCE_WIN_PER_MONITOR_DPI_AWARE
- //#define JUCE_WIN_PER_MONITOR_DPI_AWARE 1
+ #define   JUCE_WIN_PER_MONITOR_DPI_AWARE 0
 #endif
 
 //==============================================================================
 // juce_gui_extra flags:
 
 #ifndef    JUCE_WEB_BROWSER
- //#define JUCE_WEB_BROWSER 1
+ #define   JUCE_WEB_BROWSER 0
 #endif
 
 #ifndef    JUCE_USE_WIN_WEBVIEW2_WITH_STATIC_LINKING
- //#define JUCE_USE_WIN_WEBVIEW2_WITH_STATIC_LINKING 0
+ #define   JUCE_USE_WIN_WEBVIEW2_WITH_STATIC_LINKING 0
 #endif
 
 #ifndef    JUCE_USE_WIN_WEBVIEW2
- //#define JUCE_USE_WIN_WEBVIEW2 0
+ #define   JUCE_USE_WIN_WEBVIEW2 0
 #endif
 
 #ifndef    JUCE_ENABLE_LIVE_CONSTANT_EDITOR
- //#define JUCE_ENABLE_LIVE_CONSTANT_EDITOR 0
+ #define   JUCE_ENABLE_LIVE_CONSTANT_EDITOR 0
 #endif
 
 //==============================================================================

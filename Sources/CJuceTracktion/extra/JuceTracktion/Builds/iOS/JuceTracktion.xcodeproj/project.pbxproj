@@ -44,6 +44,7 @@
 /* Begin PBXFileReference section */
 		0127B7B30B588744B4FF72AA /* include_tracktion_engine_model_1.cpp */ /* include_tracktion_engine_model_1.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = include_tracktion_engine_model_1.cpp; path = ../../JuceLibraryCode/include_tracktion_engine_model_1.cpp; sourceTree = SOURCE_ROOT; };
 		09A97DB61572CA9432BEE765 /* include_juce_audio_basics.mm */ /* include_juce_audio_basics.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_audio_basics.mm; path = ../../JuceLibraryCode/include_juce_audio_basics.mm; sourceTree = SOURCE_ROOT; };
+		0A986120209B0F2F6F26A6EE /* tracktion_engine */ /* tracktion_engine */ = {isa = PBXFileReference; lastKnownFileType = folder; name = tracktion_engine; path = ../../../../../../tracktion_engine/modules/tracktion_engine; sourceTree = SOURCE_ROOT; };
 		0C8A66DE17DA3111A86112EF /* juce_audio_basics */ /* juce_audio_basics */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_audio_basics; path = ../../../../../../tracktion_engine/modules/juce/modules/juce_audio_basics; sourceTree = SOURCE_ROOT; };
 		1A7616D45B66D5C2CEA41A55 /* include_tracktion_engine_timestretch.cpp */ /* include_tracktion_engine_timestretch.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = include_tracktion_engine_timestretch.cpp; path = ../../JuceLibraryCode/include_tracktion_engine_timestretch.cpp; sourceTree = SOURCE_ROOT; };
 		1FBD726EBB21C2D6B3315534 /* include_tracktion_engine_plugins.cpp */ /* include_tracktion_engine_plugins.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = include_tracktion_engine_plugins.cpp; path = ../../JuceLibraryCode/include_tracktion_engine_plugins.cpp; sourceTree = SOURCE_ROOT; };
@@ -76,7 +77,6 @@
 		71F3B964DDB3D7E32695315C /* include_juce_audio_formats.mm */ /* include_juce_audio_formats.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_audio_formats.mm; path = ../../JuceLibraryCode/include_juce_audio_formats.mm; sourceTree = SOURCE_ROOT; };
 		723BE888148E2EA3789BCFCE /* include_juce_audio_utils.mm */ /* include_juce_audio_utils.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_audio_utils.mm; path = ../../JuceLibraryCode/include_juce_audio_utils.mm; sourceTree = SOURCE_ROOT; };
 		72C7CA56D5964A63A2CDCA06 /* include_juce_audio_processors.mm */ /* include_juce_audio_processors.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_audio_processors.mm; path = ../../JuceLibraryCode/include_juce_audio_processors.mm; sourceTree = SOURCE_ROOT; };
-		8F67B1CCF64121D62A6E8AFE /* tracktion_engine */ /* tracktion_engine */ = {isa = PBXFileReference; lastKnownFileType = folder; name = tracktion_engine; path = "~/modules/tracktion_engine"; sourceTree = "<absolute>"; };
 		8F7B806763F7A56DB165572A /* include_juce_gui_basics.mm */ /* include_juce_gui_basics.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_gui_basics.mm; path = ../../JuceLibraryCode/include_juce_gui_basics.mm; sourceTree = SOURCE_ROOT; };
 		988C952625A3BA2805D441AC /* juce_osc */ /* juce_osc */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_osc; path = ../../../../../../tracktion_engine/modules/juce/modules/juce_osc; sourceTree = SOURCE_ROOT; };
 		9E9B2D39B867F98B03EB1EE7 /* juce_dsp */ /* juce_dsp */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_dsp; path = ../../../../../../tracktion_engine/modules/juce/modules/juce_dsp; sourceTree = SOURCE_ROOT; };
@@ -159,7 +159,7 @@
 				34D07443D0619418229DD781,
 				988C952625A3BA2805D441AC,
 				FE7096B4F749447DE6F04CE6,
-				8F67B1CCF64121D62A6E8AFE,
+				0A986120209B0F2F6F26A6EE,
 				59966939DEBC8D95633024C5,
 			);
 			name = "JUCE Modules";
@@ -310,10 +310,9 @@
 					"$(SRCROOT)/../../JuceLibraryCode",
 					"$(SRCROOT)/../../../../../../tracktion_engine/modules/juce/modules",
 					"$(SRCROOT)/../../../../../../tracktion_engine/modules",
-					"$(HOME)/modules",
 					"$(inherited)",
 				);
-				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../../../../../tracktion_engine/modules/juce/modules $(SRCROOT)/../../../../../../tracktion_engine/modules $(HOME)/modules";
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../../../../../tracktion_engine/modules/juce/modules $(SRCROOT)/../../../../../../tracktion_engine/modules";
 				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.JuceTracktion;
 				PRODUCT_NAME = "JuceTracktion";
 				USE_HEADERMAP = NO;
@@ -353,11 +352,10 @@
 					"$(SRCROOT)/../../JuceLibraryCode",
 					"$(SRCROOT)/../../../../../../tracktion_engine/modules/juce/modules",
 					"$(SRCROOT)/../../../../../../tracktion_engine/modules",
-					"$(HOME)/modules",
 					"$(inherited)",
 				);
 				LLVM_LTO = YES;
-				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../../../../../tracktion_engine/modules/juce/modules $(SRCROOT)/../../../../../../tracktion_engine/modules $(HOME)/modules";
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../../../../../tracktion_engine/modules/juce/modules $(SRCROOT)/../../../../../../tracktion_engine/modules";
 				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.JuceTracktion;
 				PRODUCT_NAME = "JuceTracktion";
 				USE_HEADERMAP = NO;

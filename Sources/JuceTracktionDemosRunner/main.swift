@@ -13,18 +13,7 @@ struct DemosRunner: AsyncParsableCommand {
         ]
     )
 
-    static func main() {
-        print("Running DemosRunner!")
-        print("Running Step Sequencer Demo...")
-
-        let sequencer = StepSequencerDemo()
-        sequencer.setup()
-
-        // Run for 5 more seconds
-
-        sequencer.stop()
-        print("Demo completed!")
-    }
+    static func main() {}
 }
 
 extension DemosRunner {
