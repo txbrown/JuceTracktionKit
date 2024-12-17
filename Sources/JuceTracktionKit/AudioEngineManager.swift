@@ -28,4 +28,8 @@ public class AudioEngineManager: ObservableObject {
     public func exportAudio(to url: URL) -> Bool {
         return cxxEngine.exportAudio(to: std.string(url.path))
     }
+
+    public func getEdit() -> OpaquePointer? {
+        return cxxEngine.edit
+    }
 }
