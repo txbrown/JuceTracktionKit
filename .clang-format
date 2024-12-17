@@ -1,0 +1,56 @@
+---
+# C++ configuration
+Language: Cpp
+BasedOnStyle: LLVM
+StatementMacros: ['SWIFT_NAME']
+AttributeMacros: ['SWIFT_NAME']
+ColumnLimit: 100
+AlignAfterOpenBracket: Align
+AllowAllParametersOfDeclarationOnNextLine: false
+BinPackArguments: false
+BinPackParameters: false
+BreakBeforeBraces: Attach
+BreakConstructorInitializers: BeforeColon
+ConstructorInitializerAllOnOneLineOrOnePerLine: true
+AllowShortFunctionsOnASingleLine: Empty
+IndentWidth: 2
+PointerAlignment: Left
+SpaceAfterCStyleCast: false
+SpacesBeforeTrailingComments: 2
+SpacesInParentheses: false
+TabWidth: 2
+UseTab: Never
+AllowAllArgumentsOnNextLine: false
+AlignOperands: true
+AlwaysBreakAfterReturnType: None
+PenaltyReturnTypeOnItsOwnLine: 1000
+MacroBlockBegin: ''
+MacroBlockEnd: ''
+---
+# Objective-C configuration
+Language: ObjC
+BasedOnStyle: LLVM
+StatementMacros: ['SWIFT_NAME']
+AttributeMacros: ['SWIFT_NAME']
+ColumnLimit: 100
+AlignAfterOpenBracket: Align
+AllowAllParametersOfDeclarationOnNextLine: false
+BinPackArguments: false
+BinPackParameters: false
+BreakBeforeBraces: Attach
+BreakConstructorInitializers: BeforeColon
+ConstructorInitializerAllOnOneLineOrOnePerLine: true
+AllowShortFunctionsOnASingleLine: Empty
+IndentWidth: 2
+PointerAlignment: Left
+SpaceAfterCStyleCast: false
+SpacesBeforeTrailingComments: 2
+SpacesInParentheses: false
+TabWidth: 2
+UseTab: Never
+AllowAllArgumentsOnNextLine: false
+AlignOperands: true
+AlwaysBreakAfterReturnType: None
+PenaltyReturnTypeOnItsOwnLine: 1000
+MacroBlockBegin: ''
+MacroBlockEnd: ''
