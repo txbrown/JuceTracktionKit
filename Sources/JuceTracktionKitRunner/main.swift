@@ -42,15 +42,15 @@ class Demo: ObservableObject {
         ))
 
         for start in 0 ... 7 {
-            midiClipManager.addNote(clipID: midiClipID, noteNumber: 36, startTime: Double(start), length: 1, velocity: 117)
+            midiClipManager.addNote(clipID: midiClipID, note: .init(noteNumber: 36, startBeat: Double(start), lengthInBeats: 1, velocity: 117, color: 0, mute: false))
             if (start % 2) != 0 {
-                midiClipManager.addNote(clipID: midiClipID, noteNumber: 37, startTime: Double(start), length: 1, velocity: 117)
+                midiClipManager.addNote(clipID: midiClipID, note: .init(noteNumber: 37, startBeat: Double(start), lengthInBeats: 1, velocity: 117, color: 0, mute: false))
             }
-            midiClipManager.addNote(clipID: midiClipID, noteNumber: 38, startTime: Double(start), length: 0.5, velocity: 88)
-            midiClipManager.addNote(clipID: midiClipID, noteNumber: 38, startTime: Double(start) + 0.5, length: 0.5, velocity: 92)
+            midiClipManager.addNote(clipID: midiClipID, note: .init(noteNumber: 38, startBeat: Double(start), lengthInBeats: 0.5, velocity: 88, color: 0, mute: false))
+            midiClipManager.addNote(clipID: midiClipID, note: .init(noteNumber: 38, startBeat: Double(start) + 0.5, lengthInBeats: 0.5, velocity: 92, color: 0, mute: false))
         }
 
-        print([String](midiClipManager.listNotes(clipID: midiClipID).map { String($0) }))
+        print(midiClipManager.getNotes(clipID: midiClipID))
     }
 }
 

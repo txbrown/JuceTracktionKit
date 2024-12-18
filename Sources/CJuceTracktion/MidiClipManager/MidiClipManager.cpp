@@ -48,16 +48,7 @@ int MidiClipManager::createMidiClip(int trackID,
   if (!clip)
     return -1;
 
-  // tempo
   if (auto midiClip = clip) {
-    /*auto& pg = *midiClip->getPatternGenerator();*/
-    /*pg.setChordProgressionFromChordNames({"I", "V", "VI", "III", "IV", "I", "IV", "V"});*/
-    /*pg.mode = te::PatternGenerator::Mode::arpeggio;*/
-    /*pg.scaleRoot = 0;*/
-    /*pg.octave = 7;*/
-    /*pg.velocity = 30;*/
-    /*pg.generatePattern();*/
-
     AudioEngineHelpers::loopAroundClip(*midiClip);
   }
   // end temp
@@ -82,22 +73,18 @@ bool MidiClipManager::deleteMidiClip(int trackID, int clipID) {
   return true;
 }
 
-bool MidiClipManager::addNote(int clipID,
-                              int noteNumber,
-                              double startTime,
-                              double length,
-                              int velocity) {
+bool MidiClipManager::addNote(int clipID, const MidiNote& note) {
   auto clip =
       dynamic_cast<te::MidiClip*>(edit->clipCache.findItem(te::EditItemID::fromRawID(clipID)));
   if (!clip)
     return false;
 
   auto& midiList = clip->getSequence();
-  auto startBeat = te::BeatPosition::fromBeats(startTime);
-  auto lengthBeats = te::BeatDuration::fromBeats(length);
+  auto startBeat = te::BeatPosition::fromBeats(note.startBeat);
+  auto lengthBeats = te::BeatDuration::fromBeats(note.lengthInBeats);
   auto um = &edit.get()->getUndoManager();
 
-  midiList.addNote(noteNumber, startBeat, lengthBeats, velocity, 0, um);
+  midiList.addNote(note.noteNumber, startBeat, lengthBeats, note.velocity, 0, um);
   return true;
 }
 
@@ -122,8 +109,8 @@ bool MidiClipManager::removeNote(int clipID, int noteNumber, double startTime) {
   return false;
 }
 
-std::vector<std::string> MidiClipManager::listNotes(int clipID) {
-  std::vector<std::string> notesList;
+std::vector<MidiNote> MidiClipManager::getNotes(int clipID) {
+  std::vector<MidiNote> notesList;
 
   auto clip =
       dynamic_cast<te::MidiClip*>(edit->clipCache.findItem(te::EditItemID::fromRawID(clipID)));
@@ -131,12 +118,8 @@ std::vector<std::string> MidiClipManager::listNotes(int clipID) {
     return notesList;
 
   auto& midiList = clip->getSequence();
-
   for (const auto* note : midiList.getNotes()) {
-    notesList.push_back("Note: " + std::to_string(note->getNoteNumber()) +
-                        " Start: " + std::to_string(note->getStartBeat().inBeats()) +
-                        " Length: " + std::to_string(note->getLengthBeats().inBeats()) +
-                        " Velocity: " + std::to_string(note->getVelocity()));
+    notesList.push_back(MidiNoteUtils::fromTracktionNote(*note));
   }
 
   return notesList;

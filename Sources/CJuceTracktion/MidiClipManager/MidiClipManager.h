@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../AudioEngine/EngineHelpers.h"
+#include "../MidiNote/MidiNote.h"
 #include "swift/bridging"
 #include <string>
 #include <tracktion_engine/tracktion_engine.h>
@@ -15,11 +16,10 @@ public:
       SWIFT_NAME(MidiClipManager.createMidiClip(trackID:name:startBar:lengthInBars:));
   bool deleteMidiClip(int trackID, int clipID)
       SWIFT_NAME(MidiClipManager.deleteMidiClip(trackID:clipID:));
-  bool addNote(int clipID, int noteNumber, double startTime, double length, int velocity)
-      SWIFT_NAME(MidiClipManager.addNote(clipID:noteNumber:startTime:length:velocity:));
+  bool addNote(int clipID, const MidiNote& note) SWIFT_NAME(MidiClipManager.addNote(clipID:note:));
   bool removeNote(int clipID, int noteNumber, double startTime)
       SWIFT_NAME(MidiClipManager.removeNote(clipID:noteNumber:startTime:));
-  std::vector<std::string> listNotes(int clipID) SWIFT_NAME(MidiClipManager.listNotes(clipID:));
+  std::vector<MidiNote> getNotes(int clipID) SWIFT_NAME(MidiClipManager.getNotes(clipID:));
   void createSamplerPlugin(int trackID, int clipID, std::vector<std::string> defaultSampleFiles)
       SWIFT_NAME(MidiClipManager.createSamplerPlugin(trackID:clipID:defaultSampleFiles:));
 
