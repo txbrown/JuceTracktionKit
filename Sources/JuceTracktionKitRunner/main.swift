@@ -15,6 +15,7 @@ class Demo: ObservableObject {
     }
 
     private func setup() {
+        audioEngineManager.enableClickTrack()
         let midiTrackID: Int32 = trackManager.createAudioTrack(name: "MIDI Track")
         print("Midi Track ID: \(midiTrackID)")
 

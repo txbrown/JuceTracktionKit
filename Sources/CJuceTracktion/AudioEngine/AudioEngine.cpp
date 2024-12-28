@@ -55,6 +55,18 @@ bool AudioEngine::exportAudio(const std::string& filePath) {
   return true;
 }
 
+const bool AudioEngine::isClickTrackEnabled() {
+  return edit->clickTrackEnabled;
+}
+
+void AudioEngine::enableClickTrack() {
+  edit->clickTrackEnabled = true;
+}
+
+void AudioEngine::disableClickTrack() {
+  edit->clickTrackEnabled = false;
+}
+
 void retainAudioEngine(AudioEngine* engine) {
   assert(engine);
   ++engine->refCount;

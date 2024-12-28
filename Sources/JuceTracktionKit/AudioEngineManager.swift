@@ -32,4 +32,8 @@ public class AudioEngineManager: ObservableObject {
     public func getEdit() -> OpaquePointer? {
         return cxxEngine.edit
     }
+
+    public func enableClickTrack() {
+        cxxEngine.enableClickTrack()
+    }
 }
