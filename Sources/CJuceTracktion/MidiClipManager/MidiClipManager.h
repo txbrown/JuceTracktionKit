@@ -20,8 +20,6 @@ public:
   bool removeNote(int clipID, int noteNumber, double startTime)
       SWIFT_NAME(MidiClipManager.removeNote(clipID:noteNumber:startTime:));
   std::vector<MidiNote> getNotes(int clipID) SWIFT_NAME(MidiClipManager.getNotes(clipID:));
-  void createSamplerPlugin(int trackID, int clipID, std::vector<std::string> defaultSampleFiles)
-      SWIFT_NAME(MidiClipManager.createSamplerPlugin(trackID:clipID:defaultSampleFiles:));
 
 private:
   te::SafeSelectable<te::Edit> edit;

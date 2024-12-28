@@ -116,42 +116,32 @@ int TrackManager::addMidiClip(int trackID, double startBar, double lengthInBars)
   return clip->itemID.getRawID();
 }
 
-// bool TrackManager::loadInstrument(int trackID, const std::string &presetPath)
-// {
-//     auto it = tracks.find(trackID);
-//     if (it == tracks.end())
-//         return false;
+void TrackManager::createSamplerPlugin(int trackID, std::vector<std::string> defaultSampleFiles) {
+  if (!edit)
+    assert("Edit not found!");
 
-//     auto audioTrack = dynamic_cast<te::AudioTrack *>(it->second.get());
-//     if (!audioTrack)
-//         return false;
+  auto targetTrack = edit->trackCache.findItem(te::EditItemID::fromRawID(trackID));
+  if (!targetTrack)
+    assert("No track found for given id");
 
-//     try
-//     {
-//         // Load the instrument preset (assuming the sampler is set up
-//         correctly) auto sampler =
-//         audioTrack->pluginList.findFirstPluginOfType<te::SamplerPlugin>(); if
-//         (sampler)
-//         {
-//             const auto error =
-//             sampler->addSound(defaultSampleFiles[channelCount++].getFullPathName(),
-//             channel->name.get(), 0.0, 0.0, 1.0f);
-//             sampler->setSoundParams(sampler->getNumSounds() - 1,
-//             channel->noteNumber, channel->noteNumber, channel->noteNumber);
-//             jassert(error.isEmpty());
-//             // sampler->loadSample(presetPath);
-//         }
-//         else
-//         {
-//             std::cerr << "No sampler plugin found on track" << std::endl;
-//             return false;
-//         }
-//     }
-//     catch (const std::exception &e)
-//     {
-//         std::cerr << "Error loading instrument: " << e.what() << std::endl;
-//         return false;
-//     }
+  auto* audioTrack = dynamic_cast<te::AudioTrack*>(targetTrack);
+  if (!audioTrack) {
+    assert("No track found for given id");
+    return;
+  }
 
-//     return true;
-// }
+  if (auto sampler = dynamic_cast<te::SamplerPlugin*>(
+          edit->getPluginCache().createNewPlugin(te::SamplerPlugin::xmlTypeName, {}).get())) {
+    audioTrack->pluginList.insertPlugin(*sampler, 0, nullptr);
+
+    int channelCount = 0;
+
+    int noteNumber = 36;
+    for (auto sample : defaultSampleFiles) {
+      const auto error = sampler->addSound(sample, sample, 0.0, 0.0, 1.0f);
+      sampler->setSoundParams(sampler->getNumSounds() - 1, noteNumber, noteNumber, noteNumber);
+      noteNumber++;
+      jassert(error.isEmpty());
+    }
+  }
+}

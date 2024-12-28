@@ -21,10 +21,9 @@ class Demo: ObservableObject {
         let midiClipID = midiClipManager.createMidiClip(trackID: midiTrackID, name: "MIDI Clip - Track 1", startBar: 0, lengthInBars: 8)
         print("The new midi clip id is \(midiClipID)")
 
-        midiClipManager.createSamplerPlugin(config: .init(
+        trackManager.createSamplerPlugin(config: .init(
             name: "Sampler 1",
             trackID: Int(midiTrackID),
-            clipID: Int(midiClipID),
             samples: [
                 .init(
                     filePath: "/users/ricardo.abreu/developer/personal/midicircuit-macos/sounds/default soundbanks/shy kit/SNS_TD_kick_premium.wav",

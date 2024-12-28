@@ -18,6 +18,8 @@ public:
       SWIFT_NAME(TrackManager.addAudioClip(forTrackID:filePath:startBar:lengthInBars:));
   int addMidiClip(int trackID, double startBar, double lengthInBars)
       SWIFT_NAME(TrackManager.addMidiClip(forTrackID:startBar:lengthInBars:));
+  void createSamplerPlugin(int trackID, std::vector<std::string> defaultSampleFiles)
+      SWIFT_NAME(TrackManager.createSamplerPlugin(trackID:defaultSampleFiles:));
 
 private:
   te::Edit* edit;
