@@ -1,15 +1,13 @@
 
-import XCTest
-import JuceTracktionKit 
 import CJuceTracktion
+import JuceTracktionKit
+import XCTest
 
-@available(macOS 14.0, iOS 17.0, *)
 final class JuceTracktionKitTests: XCTestCase {
     func testTracktionEngineInitialization() {
         juce.initialiseJuce_GUI()
-        let engine = TracktionEngine()
+        let engine = TracktionEngine.getInstance()
         XCTAssertNotNil(engine)
         juce.shutdownJuce_GUI()
     }
 }
-
