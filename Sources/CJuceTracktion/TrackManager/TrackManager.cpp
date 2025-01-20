@@ -10,9 +10,7 @@ int TrackManager::createAudioTrack(const std::string& name) {
   if (!edit)
     return -1;
 
-  te::TrackInsertPoint insertPoint = te::TrackInsertPoint::getEndOfTracks(*edit);
-
-  auto newTrack = edit->insertNewAudioTrack(insertPoint, nullptr);
+  auto newTrack = edit->insertNewAudioTrack (te::TrackInsertPoint (nullptr, te::getAllTracks (*edit).getLast()), nullptr);
   if (!newTrack) {
     std::cerr << "Failed to create audio track" << std::endl;
     return -1;
