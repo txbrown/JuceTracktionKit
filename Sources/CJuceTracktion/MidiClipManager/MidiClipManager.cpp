@@ -16,39 +16,40 @@ static juce::String leadPatch =
     "filterType=\"1\" waveShape1=\"3\" filterFreq=\"100\"><MACROPARAMETERS "
     "id=\"1069\"/><MODIFIERASSIGNMENTS/><MODMATRIX/></PLUGIN>";
 
-MidiClipManager::MidiClipManager(te::Edit* edit) : edit(edit) {}
+MidiClipManager::MidiClipManager(te::Edit *edit) : edit(edit) {}
 
 MidiClipManager::~MidiClipManager() = default;
 
 int MidiClipManager::createMidiClip(int trackID,
-                                    const std::string& name,
+                                    const std::string &name,
                                     double startBar,
-                                    double lengthInBars) {
+                                    double lengthInBars)
+{
   if (!edit)
     return -1;
 
   // Find the track by ID
-  te::Track* targetTrack = edit->trackCache.findItem(te::EditItemID::fromRawID(trackID));
+  te::Track *targetTrack = te::findTrackForID(*edit, te::EditItemID::fromRawID(trackID));
+  // te::Track *targetTrack = edit->trackCache.findItem(te::EditItemID::fromRawID(trackID));
 
-  auto* audioTrack = dynamic_cast<te::AudioTrack*>(targetTrack);
+  auto *audioTrack = dynamic_cast<te::AudioTrack *>(targetTrack);
   if (!audioTrack)
     return -1;
 
-  // Convert bar positions to time positions
-  te::TimePosition startTime =
-      te::toTime(te::BeatPosition::fromBeats(startBar), edit->tempoSequence);
-  te::TimePosition endTime =
-      te::toTime(te::BeatPosition::fromBeats(startBar + lengthInBars), edit->tempoSequence);
+  // Convert bar positions to time positions using TimeRange
+  const te::TimeRange editTimeRange(
+      edit->tempoSequence.toTime(te::BeatPosition::fromBeats(startBar)),
+      edit->tempoSequence.toTime(te::BeatPosition::fromBeats(startBar + lengthInBars)));
 
   // Create and insert the MIDI clip
-  te::TimeRange timeRange(startTime, endTime);
-  auto* clip = dynamic_cast<te::MidiClip*>(
-      audioTrack->insertNewClip(te::TrackItem::Type::midi, name, timeRange, nullptr));
+  auto *clip = dynamic_cast<te::MidiClip *>(
+      audioTrack->insertNewClip(te::TrackItem::Type::midi, name, editTimeRange, nullptr));
 
   if (!clip)
     return -1;
 
-  if (auto midiClip = clip) {
+  if (auto midiClip = clip)
+  {
     AudioEngineHelpers::loopAroundClip(*midiClip);
   }
   // end temp
@@ -57,7 +58,8 @@ int MidiClipManager::createMidiClip(int trackID,
   return clip->itemID.getRawID();
 }
 
-bool MidiClipManager::deleteMidiClip(int trackID, int clipID) {
+bool MidiClipManager::deleteMidiClip(int trackID, int clipID)
+{
   if (!edit)
     return false;
 
@@ -66,20 +68,21 @@ bool MidiClipManager::deleteMidiClip(int trackID, int clipID) {
     return false;
 
   auto targetTrack = edit->trackCache.findItem(te::EditItemID::fromRawID(trackID));
-  auto* audioTrack = dynamic_cast<te::AudioTrack*>(targetTrack);
+  auto *audioTrack = dynamic_cast<te::AudioTrack *>(targetTrack);
   if (!audioTrack)
     return false;
   clip->removeFromParent();
   return true;
 }
 
-bool MidiClipManager::addNote(int clipID, const MidiNote& note) {
+bool MidiClipManager::addNote(int clipID, const MidiNote &note)
+{
   auto clip =
-      dynamic_cast<te::MidiClip*>(edit->clipCache.findItem(te::EditItemID::fromRawID(clipID)));
+      dynamic_cast<te::MidiClip *>(edit->clipCache.findItem(te::EditItemID::fromRawID(clipID)));
   if (!clip)
     return false;
 
-  auto& midiList = clip->getSequence();
+  auto &midiList = clip->getSequence();
   auto startBeat = te::BeatPosition::fromBeats(note.startBeat);
   auto lengthBeats = te::BeatDuration::fromBeats(note.lengthInBeats);
   auto um = &edit.get()->getUndoManager();
@@ -88,19 +91,22 @@ bool MidiClipManager::addNote(int clipID, const MidiNote& note) {
   return true;
 }
 
-bool MidiClipManager::removeNote(int clipID, int noteNumber, double startTime) {
+bool MidiClipManager::removeNote(int clipID, int noteNumber, double startTime)
+{
   auto clip =
-      dynamic_cast<te::MidiClip*>(edit->clipCache.findItem(te::EditItemID::fromRawID(clipID)));
+      dynamic_cast<te::MidiClip *>(edit->clipCache.findItem(te::EditItemID::fromRawID(clipID)));
   if (!clip)
     return false;
 
-  auto& midiList = clip->getSequence();
+  auto &midiList = clip->getSequence();
   auto um = &edit.get()->getUndoManager();
 
   auto startBeat = te::BeatPosition::fromBeats(startTime);
 
-  for (auto* note : midiList.getNotes()) {
-    if (note->getNoteNumber() == noteNumber && note->getStartBeat() == startBeat) {
+  for (auto *note : midiList.getNotes())
+  {
+    if (note->getNoteNumber() == noteNumber && note->getStartBeat() == startBeat)
+    {
       midiList.removeNote(*note, um);
       return true;
     }
@@ -109,27 +115,32 @@ bool MidiClipManager::removeNote(int clipID, int noteNumber, double startTime) {
   return false;
 }
 
-std::vector<MidiNote> MidiClipManager::getNotes(int clipID) {
+std::vector<MidiNote> MidiClipManager::getNotes(int clipID)
+{
   std::vector<MidiNote> notesList;
 
   auto clip =
-      dynamic_cast<te::MidiClip*>(edit->clipCache.findItem(te::EditItemID::fromRawID(clipID)));
+      dynamic_cast<te::MidiClip *>(edit->clipCache.findItem(te::EditItemID::fromRawID(clipID)));
   if (!clip)
     return notesList;
 
-  auto& midiList = clip->getSequence();
-  for (const auto* note : midiList.getNotes()) {
+  auto &midiList = clip->getSequence();
+  for (const auto *note : midiList.getNotes())
+  {
     notesList.push_back(MidiNoteUtils::fromTracktionNote(*note));
   }
 
   return notesList;
 }
 
-void create4OSCPlugin(te::AudioTrack* track, te::Edit* edit) {
+void create4OSCPlugin(te::AudioTrack *track, te::Edit *edit)
+{
   //==============================================================================
-  if (auto synth = dynamic_cast<te::FourOscPlugin*>(
-          edit->getPluginCache().createNewPlugin(te::FourOscPlugin::xmlTypeName, {}).get())) {
-    if (auto e = parseXML(organPatch)) {
+  if (auto synth = dynamic_cast<te::FourOscPlugin *>(
+          edit->getPluginCache().createNewPlugin(te::FourOscPlugin::xmlTypeName, {}).get()))
+  {
+    if (auto e = parseXML(organPatch))
+    {
       auto vt = juce::ValueTree::fromXml(*e);
 
       if (vt.isValid())
