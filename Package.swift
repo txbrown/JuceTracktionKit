@@ -19,15 +19,15 @@ let linkerSettings: [LinkerSetting] = [
 
     .unsafeFlags(
         [
-            "-L./extra/JuceTracktion/Builds/MacOSX/build/Debug",
-            "-lJuceTracktion",
+            "-L./build/lib/Debug",
+            "-ltracktion_static_d",
         ],
         .when(configuration: .debug)
     ),
     .unsafeFlags(
         [
-            "-L./extra/JuceTracktion/Builds/MacOSX/build/Release",
-            "-lJuceTracktion",
+            "-L./build/lib/Release",
+            "-ltracktion_static",
         ],
         .when(configuration: .release)
     ),
@@ -35,11 +35,11 @@ let linkerSettings: [LinkerSetting] = [
 
 // Shared CXX settings
 let commonCxxSettings: [CXXSetting] = [
-    .headerSearchPath("extra/JuceTracktion/JuceLibraryCode"),
+    // .headerSearchPath("Sources/CJuceTracktion/extra/JuceTracktion/JuceLibraryCode"),
     .headerSearchPath("../../tracktion_engine/modules"),
     .headerSearchPath("../../tracktion_engine/modules/juce/modules"),
-    .headerSearchPath("CJuceTracktion"),
-    .headerSearchPath("../tracktion_engine/modules/tracktion_engine/model/clips/"),
+    .headerSearchPath("Sources/CJuceTracktion"),
+    .headerSearchPath("../../tracktion_engine/modules/tracktion_engine/model/clips/"),
     .define("JUCE_GLOBAL_MODULE_SETTINGS_INCLUDED", to: "1"),
     .define("JUCE_STANDALONE_APPLICATION", to: "0"),
     .define("JUCE_USE_DARK_MODE", to: "0"),
@@ -107,6 +107,13 @@ let package = Package(
         .target(
             name: "CJuceTracktion",
             dependencies: [],
+            exclude: [
+                "../CJuceTracktion/extra",
+                "../../tracktion_engine/modules/juce /modules/juce_graphics/unicode/sheenbidi/Source/SheenBidi.c",
+                "../../tracktion_engine/modules/juce/modules/include_juce_graphics.cpp",
+                "../../tracktion_engine/modules/juce/modules",
+                "../../tracktion_engine/modules/juce/modules/RecentFilesMenuTemplate.nib",
+            ],
             publicHeadersPath: "include",
             cxxSettings: commonCxxSettings + [
                 .define("JUCE_DLL_BUILD", to: "1"), // Build as shared library
@@ -117,9 +124,6 @@ let package = Package(
         .target(
             name: "JuceTracktionKit",
             dependencies: ["CJuceTracktion"],
-            exclude: [
-                "CJuceTracktionKit/extra",
-            ],
             cxxSettings: commonCxxSettings,
             swiftSettings: swiftSettings
         ),

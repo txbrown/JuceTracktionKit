@@ -67,6 +67,7 @@ target_compile_definitions(tracktion_static
         JUCE_PLUGINHOST_AU=1
         TRACKTION_ENABLE_MIDI_RECORDING=1
         JUCE_MODAL_LOOPS_PERMITTED=1
+        JUCE_STRICT_REFCOUNTEDPOINTER=0
     $<$<CONFIG:Debug>:JUCE_DEBUG=1>
     $<$<CONFIG:Release>:JUCE_DEBUG=0>)
 

@@ -20,6 +20,11 @@ MidiClipManager::MidiClipManager(te::Edit *edit) : edit(edit) {}
 
 MidiClipManager::~MidiClipManager() = default;
 
+MidiClipManager *MidiClipManager::create(te::Edit *edit)
+{
+  return new MidiClipManager(edit);
+}
+
 int MidiClipManager::createMidiClip(int trackID,
                                     const std::string &name,
                                     double startBar,
@@ -30,28 +35,26 @@ int MidiClipManager::createMidiClip(int trackID,
 
   // Find the track by ID
   te::Track *targetTrack = te::findTrackForID(*edit, te::EditItemID::fromRawID(trackID));
-  // te::Track *targetTrack = edit->trackCache.findItem(te::EditItemID::fromRawID(trackID));
 
   auto *audioTrack = dynamic_cast<te::AudioTrack *>(targetTrack);
   if (!audioTrack)
     return -1;
 
-  // Convert bar positions to time positions using TimeRange
-  const te::TimeRange editTimeRange(
-      edit->tempoSequence.toTime(te::BeatPosition::fromBeats(startBar)),
-      edit->tempoSequence.toTime(te::BeatPosition::fromBeats(startBar + lengthInBars)));
+  auto &ts = edit->getTransport().edit.tempoSequence;
+  const te::TimeRange editTimeRange = te::TimeRange(te::TimePosition(0s), te::TimePosition(2s));
+
+  auto clipContainer = audioTrack->insertNewClip(te::TrackItem::Type::midi, "MIDI Clip", editTimeRange, nullptr);
 
   // Create and insert the MIDI clip
-  auto *clip = dynamic_cast<te::MidiClip *>(
-      audioTrack->insertNewClip(te::TrackItem::Type::midi, name, editTimeRange, nullptr));
+  auto *clip = dynamic_cast<te::MidiClip *>(clipContainer);
 
   if (!clip)
     return -1;
 
-  if (auto midiClip = clip)
-  {
-    AudioEngineHelpers::loopAroundClip(*midiClip);
-  }
+  // if (auto midiClip = clip)
+  // {
+  //   AudioEngineHelpers::loopAroundClip(*midiClip);
+  // }
   // end temp
 
   std::cout << "new clip created - " << clip->itemID.getRawID();
@@ -148,5 +151,20 @@ void create4OSCPlugin(te::AudioTrack *track, te::Edit *edit)
     }
 
     track->pluginList.insertPlugin(*synth, 0, nullptr);
+  }
+}
+
+void retainMidiClipManager(MidiClipManager *manager)
+{
+  assert(manager);
+  ++manager->refCount;
+}
+
+void releaseMidiClipManager(MidiClipManager *manager)
+{
+  assert(manager);
+  if (--manager->refCount == 0)
+  {
+    delete manager;
   }
 }

@@ -30,7 +30,7 @@ public struct SamplerPluginConfig {
 }
 
 public extension TrackManager {
-    mutating func createSamplerPlugin(config: SamplerPluginConfig) {
+    func createSamplerPlugin(config: SamplerPluginConfig) {
         let defaultSampleFiles = config.samples.map { std.string($0.filePath) }
         createSamplerPlugin(trackID: Int32(config.trackID), defaultSampleFiles: .init(defaultSampleFiles))
     }

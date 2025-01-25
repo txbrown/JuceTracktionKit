@@ -2,63 +2,69 @@
 #include <iostream>
 #include <juce_core/juce_core.h>
 
-TrackManager::TrackManager(te::Edit* edit) : edit(edit) {}
+TrackManager *TrackManager::create(te::Edit *edit)
+{
+  return new TrackManager(edit);
+}
+
+TrackManager::TrackManager(te::Edit *edit) : edit(edit) {}
 
 TrackManager::~TrackManager() = default;
 
-int TrackManager::createAudioTrack(const std::string& name) {
+int TrackManager::createAudioTrack(const std::string &name)
+{
   if (!edit)
     return -1;
 
-  auto newTrack = edit->insertNewAudioTrack (te::TrackInsertPoint (nullptr, te::getAllTracks (*edit).getLast()), nullptr);
-  if (!newTrack) {
+  auto newTrack = edit->insertNewAudioTrack(te::TrackInsertPoint(nullptr, te::getAllTracks(*edit).getLast()), nullptr);
+  if (!newTrack)
+  {
     std::cerr << "Failed to create audio track" << std::endl;
     return -1;
   }
 
   newTrack->setName(name);
 
-  // Store in the track map
-  int trackID = nextTrackID++;
-  tracks[trackID] = newTrack;
-
   return newTrack.get()->itemID.getRawID();
 }
 
-bool TrackManager::removeTrack(int trackID) {
-  auto it = tracks.find(trackID);
-  if (it == tracks.end())
+bool TrackManager::removeTrack(int trackID)
+{
+  te::Track *targetTrack = te::findTrackForID(*edit, te::EditItemID::fromRawID(trackID));
+
+  if (!targetTrack)
     return false;
 
-  edit->deleteTrack(it->second.get());
-  tracks.erase(it);
+  edit->deleteTrack(targetTrack);
 
   return true;
 }
 
 bool TrackManager::addAudioClip(int trackID,
-                                const std::string& filePath,
+                                const std::string &filePath,
                                 double startBar,
-                                double lengthInBars) {
+                                double lengthInBars)
+{
   // Validate trackID
-  auto it = tracks.find(trackID);
-  if (it == tracks.end())
+  te::Track *targetTrack = te::findTrackForID(*edit, te::EditItemID::fromRawID(trackID));
+  if (!targetTrack)
     return false;
 
   // Ensure the track is an AudioTrack
-  auto audioTrack = dynamic_cast<te::AudioTrack*>(it->second.get());
+  auto audioTrack = dynamic_cast<te::AudioTrack *>(targetTrack);
   if (!audioTrack)
     return false;
 
   // Convert bars to time using the TempoSequence
-  auto& tempoSequence = edit->tempoSequence;
+  auto &tempoSequence = edit->tempoSequence;
   te::TimePosition startPosition = te::toTime(te::BeatPosition::fromBeats(startBar), tempoSequence);
   te::TimePosition endPosition =
       te::toTime(te::BeatPosition::fromBeats(startBar + lengthInBars), tempoSequence);
 
   // Validate the audio file
   juce::File file(filePath);
-  if (!file.existsAsFile()) {
+  if (!file.existsAsFile())
+  {
     std::cerr << "Audio file does not exist: " << filePath << std::endl;
     return false;
   }
@@ -76,29 +82,32 @@ bool TrackManager::addAudioClip(int trackID,
   return true;
 }
 
-int TrackManager::addMidiClip(int trackID, double startBar, double lengthInBars) {
-  if (!edit) {
+int TrackManager::addMidiClip(int trackID, double startBar, double lengthInBars)
+{
+  if (!edit)
+  {
     std::cout << "addMidiClip - Edit not found";
     return -1;
   }
 
   // Check if the track exists
   auto targetTrack = edit->getTrackList().at(trackID);
-  if (!targetTrack) {
+  if (!targetTrack)
+  {
     std::cout << "No track found for id - " << trackID;
     return -1;
   }
 
   std::cout << "target track found";
 
-  auto track = dynamic_cast<te::AudioTrack*>(targetTrack);
+  auto track = dynamic_cast<te::AudioTrack *>(targetTrack);
   if (!track)
     return -1;
 
   std::cout << "dynamic_cast to audio track done";
 
   // Convert bars to time using the TempoSequence
-  auto& tempoSequence = edit->tempoSequence;
+  auto &tempoSequence = edit->tempoSequence;
   te::TimePosition startPosition = te::toTime(te::BeatPosition::fromBeats(startBar), tempoSequence);
   te::TimePosition endPosition =
       te::toTime(te::BeatPosition::fromBeats(startBar + lengthInBars), tempoSequence);
@@ -114,32 +123,40 @@ int TrackManager::addMidiClip(int trackID, double startBar, double lengthInBars)
   return clip->itemID.getRawID();
 }
 
-void TrackManager::createSamplerPlugin(int trackID, std::vector<std::string> defaultSampleFiles) {
+void TrackManager::createSamplerPlugin(int trackID, std::vector<std::string> defaultSampleFiles)
+{
   if (!edit)
-    assert("Edit not found!");
-
-  auto targetTrack = edit->trackCache.findItem(te::EditItemID::fromRawID(trackID));
-  if (!targetTrack)
-    assert("No track found for given id");
-
-  auto* audioTrack = dynamic_cast<te::AudioTrack*>(targetTrack);
-  if (!audioTrack) {
-    assert("No track found for given id");
     return;
-  }
 
-  if (auto sampler = dynamic_cast<te::SamplerPlugin*>(
-          edit->getPluginCache().createNewPlugin(te::SamplerPlugin::xmlTypeName, {}).get())) {
-    audioTrack->pluginList.insertPlugin(*sampler, 0, nullptr);
+  auto targetTrack = te::findTrackForID(*edit, te::EditItemID::fromRawID(trackID));
+  if (!targetTrack)
+    return;
 
-    int channelCount = 0;
+  auto *audioTrack = dynamic_cast<te::AudioTrack *>(targetTrack);
+  if (!audioTrack)
+    return;
+
+  if (auto sampler = dynamic_cast<te::SamplerPlugin *>(edit->getPluginCache().createNewPlugin(te::SamplerPlugin::xmlTypeName, {}).get()))
+  {
+    audioTrack->pluginList.insertPlugin(sampler, 0, nullptr);
 
     int noteNumber = 36;
-    for (auto sample : defaultSampleFiles) {
+    for (const auto &sample : defaultSampleFiles)
+    {
       const auto error = sampler->addSound(sample, sample, 0.0, 0.0, 1.0f);
       sampler->setSoundParams(sampler->getNumSounds() - 1, noteNumber, noteNumber, noteNumber);
-      noteNumber++;
       jassert(error.isEmpty());
+      noteNumber++;
     }
   }
+}
+
+void retainTrackManager(TrackManager *manager)
+{
+  manager->refCount++;
+}
+
+void releaseTrackManager(TrackManager *manager)
+{
+  manager->refCount--;
 }

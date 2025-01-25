@@ -9,8 +9,8 @@ class Demo: ObservableObject {
 
     public init() {
         audioEngineManager = AudioEngineManager(name: "JuceTracktionKitRunner")
-        trackManager = TrackManager(audioEngineManager.getEdit())
-        midiClipManager = MidiClipManager(audioEngineManager.getEdit())
+        trackManager = TrackManager.create(audioEngineManager.getEdit())
+        midiClipManager = MidiClipManager.create(audioEngineManager.getEdit())
         setup()
     }
 
@@ -19,9 +19,13 @@ class Demo: ObservableObject {
         let midiTrackID: Int32 = trackManager.createAudioTrack(name: "MIDI Track")
         print("Midi Track ID: \(midiTrackID)")
 
-        let midiClipID = midiClipManager.createMidiClip(trackID: midiTrackID, name: "MIDI Clip - Track 1", startBar: 0, lengthInBars: 8)
+        let midiClipID = midiClipManager
+            .createMidiClip(trackID: midiTrackID, name: "MIDI Clip - Track 1", startBar: 0, lengthInBars: 8)
         print("The new midi clip id is \(midiClipID)")
 
+        // TODO: Fix me
+        // there is an error with "pthread_mutex_lock" to be fixed here
+        // don't know why it happens all of a sudden but I have no idea
         trackManager.createSamplerPlugin(config: .init(
             name: "Sampler 1",
             trackID: Int(midiTrackID),
