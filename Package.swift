@@ -19,14 +19,14 @@ let linkerSettings: [LinkerSetting] = [
 
     .unsafeFlags(
         [
-            "-L./build/lib/Debug",
+            "-Lbuild/lib/Debug",
             "-ltracktion_static_d",
         ],
         .when(configuration: .debug)
     ),
     .unsafeFlags(
         [
-            "-L./build/lib/Release",
+            "-Lbuild/lib/Release",
             "-ltracktion_static",
         ],
         .when(configuration: .release)
@@ -91,6 +91,7 @@ let package = Package(
             dependencies: [
                 "JuceTracktionDemos",
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
+                "JuceTracktionKit",
             ],
             cxxSettings: commonCxxSettings,
             swiftSettings: swiftSettings
