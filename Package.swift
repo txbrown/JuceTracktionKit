@@ -17,25 +17,14 @@ let linkerSettings: [LinkerSetting] = [
     .linkedFramework("Security"),
     .linkedFramework("WebKit"),
 
-    .unsafeFlags(
-        [
-            "-Lbuild/lib/Debug",
-            "-ltracktion_static_d",
-        ],
-        .when(configuration: .debug)
-    ),
-    .unsafeFlags(
-        [
-            "-Lbuild/lib/Release",
-            "-ltracktion_static",
-        ],
-        .when(configuration: .release)
-    ),
+    // Link the static library
+    .linkedLibrary("tracktion_static", .when(configuration: .debug)),
+    .linkedLibrary("tracktion_static", .when(configuration: .release)),
+    .unsafeFlags(["-LSources/CJuceTracktion/lib"], .when(platforms: [.macOS, .iOS])), // Library search path
 ]
 
 // Shared CXX settings
 let commonCxxSettings: [CXXSetting] = [
-    // .headerSearchPath("Sources/CJuceTracktion/extra/JuceTracktion/JuceLibraryCode"),
     .headerSearchPath("../../tracktion_engine/modules"),
     .headerSearchPath("../../tracktion_engine/modules/juce/modules"),
     .headerSearchPath("Sources/CJuceTracktion"),
@@ -110,7 +99,7 @@ let package = Package(
             dependencies: [],
             exclude: [
                 "../CJuceTracktion/extra",
-                "../../tracktion_engine/modules/juce /modules/juce_graphics/unicode/sheenbidi/Source/SheenBidi.c",
+                "../../tracktion_engine/modules/juce/modules/juce_graphics/unicode/sheenbidi/Source/SheenBidi.c",
                 "../../tracktion_engine/modules/juce/modules/include_juce_graphics.cpp",
                 "../../tracktion_engine/modules/juce/modules",
                 "../../tracktion_engine/modules/juce/modules/RecentFilesMenuTemplate.nib",
