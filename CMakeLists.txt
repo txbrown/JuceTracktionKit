@@ -47,7 +47,7 @@ add_library(tracktion_static STATIC)
 
 # Set output names based on configuration
 set_target_properties(tracktion_static PROPERTIES 
-    OUTPUT_NAME_DEBUG "tracktion_static_d"
+    OUTPUT_NAME_DEBUG "tracktion_static"
     OUTPUT_NAME_RELEASE "tracktion_static"
     ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib/$<CONFIG>")
 
