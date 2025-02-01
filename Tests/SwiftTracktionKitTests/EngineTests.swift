@@ -1,4 +1,4 @@
-@testable import JuceTracktionKit
+@testable import SwiftTracktionKit
 import XCTest
 
 final class EngineTests: XCTestCase {

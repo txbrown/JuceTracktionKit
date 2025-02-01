@@ -1,9 +1,9 @@
 
 import CJuceTracktion
-import JuceTracktionKit
+import SwiftTracktionKit
 import XCTest
 
-final class JuceTracktionKitTests: XCTestCase {
+final class SwiftTracktionKitTests: XCTestCase {
     func testTracktionEngineInitialization() {
         juce.initialiseJuce_GUI()
         let engine = AudioEngine.create("Test")

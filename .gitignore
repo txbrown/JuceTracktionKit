@@ -1,9 +1,22 @@
-.DS_Store
-/.build
-/Packages
-/*.xcodeproj
+# Build artifacts
+build/
+.build/
+*.xcframework/
+Sources/CJuceTracktion/extra/
+
+# Xcode
+*.xcodeproj
+*.xcworkspace
 xcuserdata/
 DerivedData/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+
 .swiftpm/config/registries.json
 .swiftpm/xcode/package.xcworkspace/contents.xcworkspacedata
 .netrc
@@ -11,3 +24,6 @@ DerivedData/
 
 ./Sources/CJuceTracktion/extra/JuceTracktion/Builds/MacOSX/build/Debug/
 Sources/CJuceTracktion/extra/JuceTracktion/Builds/MacOSX/build/Debug
+build_debug
+build_release
+ModuleCache

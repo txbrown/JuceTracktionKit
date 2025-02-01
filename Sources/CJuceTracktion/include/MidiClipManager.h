@@ -1,13 +1,15 @@
 #pragma once
 
-#include "../AudioEngine/EngineHelpers.h"
-#include "../MidiNote/MidiNote.h"
+#include "CJuceTracktionExport.h"
+#include "EngineHelpers.h"
+#include "MidiNote.h"
 #include "swift/bridging"
 #include <string>
 #include <tracktion_engine/tracktion_engine.h>
 #include <vector>
+#include <memory>
 
-class MidiClipManager
+class CJUCETRACKTION_API MidiClipManager
 {
 public:
   MidiClipManager(te::Edit *edit);
@@ -32,5 +34,5 @@ private:
   friend void releaseMidiClipManager(MidiClipManager *);
 } SWIFT_IMMORTAL_REFERENCE;
 
-void retainMidiClipManager(MidiClipManager *);
-void releaseMidiClipManager(MidiClipManager *);
+CJUCETRACKTION_API void retainMidiClipManager(MidiClipManager *);
+CJUCETRACKTION_API void releaseMidiClipManager(MidiClipManager *);

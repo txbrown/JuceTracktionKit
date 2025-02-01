@@ -1,0 +1,9 @@
+module CJuceTracktion {
+    header "CJuceTracktion.h"
+    header "AudioEngine.h"
+     header "TrackManager.h"
+      header "MidiClipManager.h"
+    header "../../../tracktion_engine/modules/tracktion_engine/tracktion_engine.h"
+
+    export *
+}

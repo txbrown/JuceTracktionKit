@@ -1,13 +1,15 @@
 #pragma once
 
-#include "../AudioEngine/EngineHelpers.h"
+#include "CJuceTracktionExport.h"
+#include "EngineHelpers.h"
 #include <juce_core/juce_core.h>
 #include <map>
 #include <string>
 #include <swift/bridging>
 #include <tracktion_engine/tracktion_engine.h>
+#include <memory>
 
-class TrackManager
+class CJUCETRACKTION_API TrackManager
 {
 public:
   static TrackManager *create(te::Edit *edit);
@@ -31,5 +33,5 @@ private:
   friend void releaseTrackManager(TrackManager *);
 } SWIFT_IMMORTAL_REFERENCE;
 
-void retainTrackManager(TrackManager *);
-void releaseTrackManager(TrackManager *);
+CJUCETRACKTION_API void retainTrackManager(TrackManager *);
+CJUCETRACKTION_API void releaseTrackManager(TrackManager *);

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "CJuceTracktionExport.h"
 #include "EngineHelpers.h"
 #include "swift/bridging"
 #include <atomic>
@@ -8,7 +9,7 @@
 #include <string>
 #include <tracktion_engine/tracktion_engine.h>
 
-class AudioEngine
+class CJUCETRACKTION_API AudioEngine
 {
 public:
   static AudioEngine *create(const std::string &name);
@@ -40,5 +41,5 @@ private:
   friend void releaseAudioEngine(AudioEngine *);
 } SWIFT_IMMORTAL_REFERENCE;
 
-void retainAudioEngine(AudioEngine *);
-void releaseAudioEngine(AudioEngine *);
+CJUCETRACKTION_API void retainAudioEngine(AudioEngine *);
+CJUCETRACKTION_API void releaseAudioEngine(AudioEngine *);

@@ -1,8 +1,8 @@
 
-import JuceTracktionKit
+import SwiftTracktionKit
 
 @main
-struct JuceTracktionKit {
+struct SwiftTracktionKit {
     static func main() {
         // Create engine instance
         let engine = Engine()

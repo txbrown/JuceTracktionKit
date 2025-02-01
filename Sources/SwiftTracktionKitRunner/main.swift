@@ -1,5 +1,5 @@
 import CJuceTracktion
-import JuceTracktionKit
+import SwiftTracktionKit
 import SwiftUI
 
 class Demo: ObservableObject {
@@ -8,7 +8,7 @@ class Demo: ObservableObject {
     private var midiClipManager: MidiClipManager
 
     public init() {
-        audioEngineManager = AudioEngineManager(name: "JuceTracktionKitRunner")
+        audioEngineManager = AudioEngineManager(name: "SwiftTracktionKitRunner")
         trackManager = TrackManager.create(audioEngineManager.getEdit())
         midiClipManager = MidiClipManager.create(audioEngineManager.getEdit())
         setup()
