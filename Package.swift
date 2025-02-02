@@ -158,7 +158,7 @@ let package = Package(
                 .define("JUCE_USE_CORETEXT_LAYOUT", to: "0"),
                 .define("JUCE_DISABLE_COREGRAPHICS_FONT_SMOOTHING", to: "1"),
                 .define("TRACKTION_ENABLE_TIMESTRETCH_SOUNDTOUCH", to: "0"),
-                .define("TRACKTION_LOG_ENABLED", to: "0"),
+                .define("TRACKTION_LOG_ENABLED", to: "1"),
                 .define("TRACKTION_ENABLE_GRAPH_NATIVE_PERFORMANCE_COUNTERS", to: "0"),
                 .define("TRACKTION_ENABLE_GRAPH_NATIVE_SIGNPOSTS", to: "0"),
                 .define("TRACKTION_ENABLE_GRAPH_PERFORMANCE_COUNTERS", to: "0"),
