@@ -78,8 +78,8 @@ bool TrackManager::addAudioClip(int trackID,
             file,
             {{{}, te::TimeDuration::fromSeconds(audioFile.getLength())}, {}},
             false))
-      return newClip;
-  return true;
+      return newClip != nullptr;
+  return false;
 }
 
 int TrackManager::addMidiClip(int trackID, double startBar, double lengthInBars)

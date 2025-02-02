@@ -1,17 +1,8 @@
 #pragma once
 
-// // System headers
-// #include <os/signpost.h>
-// #include <os/log.h>
-
-// // Configuration headers
-// #include "TracktionConfig.h"
-// #include "TracktionSignpost.h"
-// #include "OSLogConfig.h"
-
-// Engine headers
+// Custom defines
+#include "SignpostDefines.h"
 #include <tracktion_engine/tracktion_engine.h>
-#include "../JuceLibraryCode/JuceHeader.h"
 
 // Project headers
 #include "EngineHelpers.h"
