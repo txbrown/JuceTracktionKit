@@ -54,22 +54,51 @@ build_configuration() {
 echo "Building all configurations..."
 
 # Build all configurations
+build_configuration "iOS" true "debug"
 build_configuration "iOS" true "release"
+build_configuration "macOS" false "debug"
 build_configuration "macOS" false "release"
 
 echo "Creating XCFramework..."
 
 # Remove any existing XCFramework
-rm -rf "${OUTPUT_PATH}/Tracktion.xcframework"
+rm -rf "${OUTPUT_PATH}/Tracktion-debug.xcframework"
+rm -rf "${OUTPUT_PATH}/Tracktion-release.xcframework"
 
-# Create XCFramework from static libraries (release only)
+# Create Debug XCFramework
+xcodebuild -create-xcframework \
+    -library "${BUILD_DIR}/iOS-debug/lib/Debug/libtracktion_static.a" \
+    -library "${BUILD_DIR}/macOS-debug/lib/Debug/libtracktion_static.a" \
+    -output "${OUTPUT_PATH}/Tracktion-debug.xcframework"
+
+# Create Release XCFramework
 xcodebuild -create-xcframework \
     -library "${BUILD_DIR}/iOS-release/lib/Release/libtracktion_static.a" \
     -library "${BUILD_DIR}/macOS-release/lib/Release/libtracktion_static.a" \
-    -output "${OUTPUT_PATH}/Tracktion.xcframework"
+    -output "${OUTPUT_PATH}/Tracktion-release.xcframework"
+
+echo "Creating zip archive..."
+pushd "${OUTPUT_PATH}" > /dev/null
+zip -r Tracktion-debug.xcframework.zip Tracktion-debug.xcframework
+zip -r Tracktion-release.xcframework.zip Tracktion-release.xcframework
+popd > /dev/null
+
+echo "Computing checksum..."
+DEBUG_CHECKSUM=$(swift package compute-checksum "${OUTPUT_PATH}/Tracktion-debug.xcframework.zip")
+RELEASE_CHECKSUM=$(swift package compute-checksum "${OUTPUT_PATH}/Tracktion-release.xcframework.zip")
+echo "Debug Checksum: ${DEBUG_CHECKSUM}"
+echo "Release Checksum: ${RELEASE_CHECKSUM}"
+
+# Save checksums to file
+cat > "${ROOT_PATH}/checksums.txt" << EOF
+DEBUG_CHECKSUM=${DEBUG_CHECKSUM}
+RELEASE_CHECKSUM=${RELEASE_CHECKSUM}
+EOF
+echo "Checksums saved to checksums.txt"
 
 echo "Verifying final XCFramework structure:"
-ls -la "${OUTPUT_PATH}/Tracktion.xcframework"
+ls -la "${OUTPUT_PATH}/Tracktion-debug.xcframework"
+ls -la "${OUTPUT_PATH}/Tracktion-release.xcframework"
 
 popd > /dev/null
 
