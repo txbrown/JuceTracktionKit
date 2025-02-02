@@ -20,7 +20,7 @@ public class AudioEngineManager: ObservableObject {
         isPlaying = false
     }
 
-    func setTempo(_ bpm: Double) {
+    public func setTempo(_ bpm: Double) {
         cxxEngine.tempo = bpm
         tempo = bpm
     }
