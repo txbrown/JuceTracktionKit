@@ -11,6 +11,7 @@
 
 // Engine headers
 #include <tracktion_engine/tracktion_engine.h>
+#include "../JuceLibraryCode/JuceHeader.h"
 
 // Project headers
 #include "EngineHelpers.h"

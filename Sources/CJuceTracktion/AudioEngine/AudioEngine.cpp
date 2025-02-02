@@ -92,6 +92,12 @@ void AudioEngine::exportAudio(const std::string &filePath, void (*onprogresschan
   {
     juce::File outputFile(filePath);
 
+    // throw error if file exists
+    if (outputFile.exists())
+    {
+      throw std::runtime_error("File already exists");
+    }
+
     // Validate the output file
     if (!te::Renderer::checkTargetFile(*engine, outputFile))
     {
