@@ -51,10 +51,10 @@ int MidiClipManager::createMidiClip(int trackID,
   if (!clip)
     return -1;
 
-  // if (auto midiClip = clip)
-  // {
-  //   AudioEngineHelpers::loopAroundClip(*midiClip);
-  // }
+   if (auto midiClip = clip)
+   {
+     AudioEngineHelpers::loopAroundClip(*midiClip);
+   }
   // end temp
 
   std::cout << "new clip created - " << clip->itemID.getRawID();
